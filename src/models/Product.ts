@@ -8,12 +8,15 @@ export class Product {
     this.name = name;
     this.price = price;
   }
-  // Returns a formatted string with the product's details
+
   displayDetails(): string {
     return `SKU: ${this.sku}, Name: ${this.name}, Price: $${this.price.toFixed(
       2
     )}`;
   }
 
-  getPriceWithTax;
+  getPriceWithTax(): number {
+    const defaultTaxRate = 0.05;
+    return this.price * (1 + defaultTaxRate);
+  }
 }
