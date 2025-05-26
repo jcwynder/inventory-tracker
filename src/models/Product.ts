@@ -1,13 +1,5 @@
 export class Product {
-  sku: string;
-  name: string;
-  price: number;
-
-  constructor(sku: string, name: string, price: number) {
-    this.sku = sku;
-    this.name = name;
-    this.price = price;
-  }
+  constructor(public sku: string, public name: string, public price: number) {}
 
   displayDetails(): string {
     return `SKU: ${this.sku}, Name: ${this.name}, Price: $${this.price.toFixed(
@@ -16,7 +8,6 @@ export class Product {
   }
 
   getPriceWithTax(): number {
-    const defaultTaxRate = 0.05;
-    return this.price * (1 + defaultTaxRate);
+    return this.price;
   }
 }

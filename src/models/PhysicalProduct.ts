@@ -1,23 +1,26 @@
 import { Product } from "./Product";
-
-export class PhysicalProduct extends Product {
-  weight: number;
-
-  constructor(sku: string, name: string, price: number, weight: number) {
+import { DiscountableProduct } from "../interfaces/DiscountableProduct";
+export class PhysicalProduct extends Product implements DiscountableProduct {
+  constructor(sku: string, name: string, price: number, public weight: number) {
     super(sku, name, price);
-    this.weight = weight;
   }
 
-  getPriceWithTax(): number {
-    const taxRate = 0.1;
-    return this.price * (1 + taxRate);
+  get getFormattedWeight(): string {
+    return `${this.weight} kg`;
   }
 
-  get formattedWeight(): string {
-    return `${this.weight.toFixed(2)} kg`;
+  override getPriceWithTax(): number {
+    return this.price * 1.1;
   }
 
-  displayDetails(): string {
-    return `${super.displayDetails}, Weight: ${this.formattedWeight};`;
+  applyDiscount(discountPercent: number): void {
+    const discountAmount = this.price * (discountPercent / 100);
+    this.price -= discountAmount;
+  }
+
+  applyBulkDiscount(quantity: number): void {
+    if (quantity > 10 || this.weight > 10) {
+      this.applyDiscount(15);
+    }
   }
 }
